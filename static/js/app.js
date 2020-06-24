@@ -23,52 +23,18 @@ var jsonFile = "/samples.json";
 // Fetch the JSON data and console log it
 d3.json(jsonFile)
   .then(function (jsonObject) {
-    //
-    console.log(jsonObject);
-
-    //turn it into an array with/object? 
-    // var newDataArray = JSON.parse(jsonObject);
-    // console.log(newDataArray);
-
-    //I want to loop through object to get full list of names
     var metadata = jsonObject.metadata;
     var sampleNames = jsonObject.names;
     var samples = jsonObject.samples;
-    console.log(metadata);
-    console.log(sampleNames);
-    console.log(samples);
+    // console.log(metadata);
+    // console.log(sampleNames);
+    // console.log(samples);
 
-    dropdown();
-
-    //creating variables for the chart or rather creating filterable objects
-    var sampleIDs = jsonObject.samples[0].otu_ids;
-    console.log(sampleIDs);
-    var sampleValues = jsonObject.samples.sample_values;
-    var otuIDs = jsonObject.samples.otu_ids;
-    var labels = jsonObject.samples.otu_labels;
-
-    //filter through the data: want top 10 of the samlpe_values for individual picked
-
-    // bar chart
-    var trace1 = {
-      x: otuIDs,
-      y: sampleValues,
-      type: "bar",
-      orientation: 'h'
-    };
-
-    var data = [trace1];
-
-    var layout = {
-      title: "'Bar' Chart",
-      // xaxis: { title: "Drinks"},
-      // yaxis: { title: "% of Drinks Ordered"}
-    };
-
-    Plotly.newPlot("bar", data, layout);
-
-
-
+    dropdown(); 
+    init();
+    //intitializing with test sample id #940
+    
+    
 
     // create a function to select and append
     function dropdown() {
@@ -82,6 +48,73 @@ d3.json(jsonFile)
           .property("value", sampleName)
       });
     }
+    
+    function init() {
+      var xAxis = [];
+      var yAxis = [];
+      for (var i=0; i < 10; i++) {
+        
+        console.log("init function");
+        var x_init = samples[0].otu_ids[i];
+        xAxis.push(x_init);
+        console.log(x_init);
+        var y_init = samples[0].sample_values[i];
+        yAxis.push(y_init);
+        console.log(y_init);
+        
+        var trace1 = {
+          x: yAxis,
+          y: xAxis,
+          type: "bar",
+          orientation: 'h'
+        };
+    
+        var data = [trace1];
+    
+        var layout = {
+          title: "Test Subject ID# 940",
+          xaxis: { title: "OTU IDs"},
+          yaxis: { title: "OTU Values"}
+        };
+    }
+  
+    Plotly.newPlot("bar", data, layout);
+  
+    }
   });
 
+// create a filter function
+    // function filterSamples(sample){
+    //   return sample.otu_ids;
+    // };
 
+    // var filteredSamples = samples.filter(filterSamples);
+    // console.log(filteredSamples);
+    // var otus = filteredSamples.map(otu => otu.otu_ids);
+    // console.log(otus);
+    // var sampleValues = filteredSamples.map(value => value.sample_values);
+    // console.log(sampleValues);
+
+
+    
+    // // bar chart
+    // var trace1 = {
+    //   x: otus,
+    //   y: sampleValues,
+    //   type: "bar",
+    //   orientation: 'h'
+    // };
+
+    // var data = [trace1];
+
+    // var layout = {
+    //   title: "Belly Button Grossness",
+    //   xaxis: { title: "OTU IDs"},
+    //   yaxis: { title: "OTU Values"}
+    // };
+
+    // Plotly.newPlot("bar", data, layout);
+
+
+
+  
