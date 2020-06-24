@@ -29,6 +29,8 @@ d3.json(jsonFile)
     // console.log(metadata);
     // console.log(sampleNames);
     // console.log(samples);
+    console.log(metadata[0]);
+
 
     dropdown(); 
     init();
@@ -82,6 +84,15 @@ d3.json(jsonFile)
   
     }
   });
+
+  d3.json(jsonFile)
+  .then(function (jsonObject) {
+    var metadata = jsonObject.metadata;
+    console.log(metadata[0]);
+    var meta = Object.entries(metadata[0]);
+    var metaDiv = d3.select("#sample-metadata");
+    metaDiv.append("p").text(meta);
+})
 
 // create a filter function
     // function filterSamples(sample){
