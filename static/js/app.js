@@ -17,38 +17,71 @@
 // }
 
 
-var dataSet = "/samples.json";
-console.log(typeof dataSet);
-
+var jsonFile = "/samples.json";
 
 
 // Fetch the JSON data and console log it
-d3.json(dataSet).then(function(data) {
-  var sampleID = data.samples.id;
-  console.log(sampleID);
-  var sampleValues = data.samples.sample_values;
-  var otuIDs = data.samples.otu_ids; 
-  var labels = data.samples.otu_labels;
-  // bar chart
-  var trace1 = {
-    x: otuIDs,
-    y: sampleValues,
-    type: "bar",
-    orientation: 'h'
-  };
+d3.json(jsonFile)
+  .then(function (jsonObject) {
+    //
+    console.log(jsonObject);
 
-  var data = [trace1];
+    //turn it into an array with/object? 
+    // var newDataArray = JSON.parse(jsonObject);
+    // console.log(newDataArray);
 
-  var layout = {
-    title: "'Bar' Chart",
-    // xaxis: { title: "Drinks"},
-    // yaxis: { title: "% of Drinks Ordered"}
-  };
+    //I want to loop through object to get full list of names
+    var metadata = jsonObject.metadata;
+    var sampleNames = jsonObject.names;
+    var samples = jsonObject.samples;
+    console.log(metadata);
+    console.log(sampleNames);
+    console.log(samples);
 
-  Plotly.newPlot("bar", data, layout);
-});
+    dropdown();
+
+    //creating variables for the chart or rather creating filterable objects
+    var sampleIDs = jsonObject.samples[0].otu_ids;
+    console.log(sampleIDs);
+    var sampleValues = jsonObject.samples.sample_values;
+    var otuIDs = jsonObject.samples.otu_ids;
+    var labels = jsonObject.samples.otu_labels;
+
+    //filter through the data: want top 10 of the samlpe_values for individual picked
+
+    // bar chart
+    var trace1 = {
+      x: otuIDs,
+      y: sampleValues,
+      type: "bar",
+      orientation: 'h'
+    };
+
+    var data = [trace1];
+
+    var layout = {
+      title: "'Bar' Chart",
+      // xaxis: { title: "Drinks"},
+      // yaxis: { title: "% of Drinks Ordered"}
+    };
+
+    Plotly.newPlot("bar", data, layout);
 
 
 
-  
- 
+
+    // create a function to select and append
+    function dropdown() {
+      console.log("wer")
+      var select = d3.select("#selDataset");
+
+      sampleNames.forEach(function (sampleName) {
+        select
+          .append("option")
+          .text(sampleName)
+          .property("value", sampleName)
+      });
+    }
+  });
+
+
