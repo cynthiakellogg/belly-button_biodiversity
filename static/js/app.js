@@ -35,21 +35,34 @@ d3.json(jsonFile)
     dropdown(); 
     init();
     //intitializing with test sample id #940
-    
-    
-
-    // create a function to select and append
-    function dropdown() {
-      console.log("wer")
-      var select = d3.select("#selDataset");
-
-      sampleNames.forEach(function (sampleName) {
-        select
-          .append("option")
-          .text(sampleName)
-          .property("value", sampleName)
-      });
+    d3.selectAll("#selDataset").on("change", optionChanged);
+  
+    function optionChanged() {
+      console.log("change happened")
+      var dropdownMenu = d3.select("#selDataset");
+      var dataset = dropdownMenu.property("value");
+      updatePlotly(data);
     }
+    
+    
+
+    function updatePlotly(newdata) {
+      Plotly.restyle("bar", "values", [newdata]);
+    }
+      
+
+      // create a function to select and append
+      function dropdown() {
+        console.log("wer")
+        var select = d3.select("#selDataset");
+
+        sampleNames.forEach(function (sampleName) {
+          select
+            .append("option")
+            .text(sampleName)
+            .property("value", sampleName)
+        });
+      }
     
     function init() {
       var xAxis = [];
@@ -101,6 +114,28 @@ d3.json(jsonFile)
    
 
 })
+
+// On change to the DOM, call getData()
+
+
+d3.json(jsonFile)
+.then(function (jsonObject) {
+  
+  
+})
+
+
+
+// Function called by DOM changes
+// function getData() {
+  // var dropdownMenu = d3.select("#selDataset");
+  // Assign the value of the dropdown menu option to a variable
+  
+  // Initialize an empty array for the country's data
+  
+
+// Update the restyled plot's values
+
 
 // create a filter function
     // function filterSamples(sample){
