@@ -91,7 +91,15 @@ d3.json(jsonFile)
     console.log(metadata[0]);
     var meta = Object.entries(metadata[0]);
     var metaDiv = d3.select("#sample-metadata");
-    metaDiv.append("p").text(meta);
+    metaDiv.append("p").text(meta[0]);
+    metaDiv.append("p").text(meta[1]);
+    metaDiv.append("p").text(meta[2]);
+    metaDiv.append("p").text(meta[3]);
+    metaDiv.append("p").text(meta[4]);
+    metaDiv.append("p").text(meta[5]);
+    metaDiv.append("p").text(meta[6]);
+   
+
 })
 
 // create a filter function
