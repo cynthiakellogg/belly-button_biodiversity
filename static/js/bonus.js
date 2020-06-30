@@ -10,7 +10,17 @@ function chart(sampleValue) {
     d3.json("samples.json").then(function (data) {
         // destructure data
         var samples = data.samples;
+        console.log(samples);
+        function filterSamples(sampleValue){
+            console.log(sampleValue);
+            for (var i=0; i <samples.length; i++) {
+                console.log(sampleValue);
+                console.log(samples[i].otu_lablels);
+            }
+        }
+        filterSamples(sampleValue);
     });
+    
 }
 function metadata(sampleValue) {
     console.log(sampleValue);
