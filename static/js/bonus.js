@@ -47,18 +47,19 @@ function chart(sampleValue) {
         Plotly.newPlot("bar", data, layout);
 
         var traceBubble = {
-            x: yAxis,
-            y: bubbleY,
+            x: yAxis.slice(0, 10),
+            y: bubbleY.slice(0, 10),
             mode: 'markers',
             marker: {
-              size: bubbleY
+              size: bubbleY.slice(0,10),
+              color: yAxis.slice(0, 10)
             }
           };
           
           var data = [traceBubble];
           
           var layout = {
-            title: 'Marker Size',
+            title: 'Belly Buttons',
             showlegend: false,
             height: 600,
             width: 600
