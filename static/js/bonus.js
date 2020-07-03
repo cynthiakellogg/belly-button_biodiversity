@@ -10,35 +10,83 @@ function chart(sampleValue) {
     d3.json("samples.json").then(function (data) {
         // destructure data
         var samples = data.samples;
-        console.log(samples);
-        function filterSamples(sampleValue){
-            console.log(sampleValue);
-            for (var i=0; i <samples.length; i++) {
-                console.log(sampleValue);
-                console.log(samples[i].otu_lablels);
+        var newVar = samples.filter(sampleObject => sampleObject.id == sampleValue);
+        var sortedNewVar = newVar[0];
+        console.log(sortedNewVar);
+        var ids = newVar.map(id => id.otu_ids);
+
+        var values = newVar.map(value => value.sample_values);
+        var bubbleY = values[0];
+        
+
+        var yAxis = ids[0];
+        console.log(yAxis);
+        var sortY = yAxis.sort((function(a, b){return b - a}));
+        console.log(sortY);
+        var xAxis = values[0];
+        
+        // console.log(filteredLabels);
+        
+        var trace1 = {
+            x: xAxis.slice(0, 10),
+            y: sortY.slice(0, 10),
+            
+            type: "bar",
+            orientation: 'h'
+            };
+            
+        var data = [trace1];
+    
+            var layout = {
+            title: `Belly Button Grossness for Sample # ${sampleValue}`,
+            xaxis: { title: "OTU Sample Value" },
+            yaxis: { title: "OTU ID # "},
+            showlegend: false
+            };
+        
+        Plotly.newPlot("bar", data, layout);
+
+        var traceBubble = {
+            x: yAxis,
+            y: bubbleY,
+            mode: 'markers',
+            marker: {
+              size: bubbleY
             }
-        }
-        filterSamples(sampleValue);
+          };
+          
+          var data = [traceBubble];
+          
+          var layout = {
+            title: 'Marker Size',
+            showlegend: false,
+            height: 600,
+            width: 600
+          };
+          
+          Plotly.newPlot('bubble', data, layout);
     });
+
+    
     
 }
 function metadata(sampleValue) {
-    console.log(sampleValue);
+    // console.log(sampleValue);
     // use d3 to read json
     d3.json("samples.json").then(function (data) {
         // destructure data
         var metadata = data.metadata;
-        console.log(metadata);
+        // console.log(metadata);
         // define a filter function
         function filterMetadata(sampleValue) {
-            console.log(sampleValue);
+            // console.log(sampleValue);
         
             for (var i = 0; i <metadata.length; i++){
-                console.log(sampleValue);
-                console.log(metadata[i].id);
+                // console.log(sampleValue);
+                // console.log(metadata[i].id);
                 if (sampleValue == metadata[i].id) {
-                    console.log(sampleValue);
-                    console.log(metadata[i].id);
+                    // console.log(sampleValue);
+                    // console.log(metadata[i].id);
                     return metadata[i];
                 }
             }
